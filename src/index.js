@@ -13,20 +13,33 @@ class Square extends React.Component {
   render() {
     return (
       <button className="square" onClick={()=> this.setState({value: 'X'})}>
-
         {this.state.value}
       </button>
     );
   }
 }
-
+// Board にコンストラクタを追加し、初期 state として 9 個のマス目に対応する 9 個の null 値をセット
 class Board extends React.Component {
-  renderSquare(i) {
-    return <Square value={i} />;
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+    };
   }
+
+  renderSquare(i) {
+    return (
+      // Board から Square に関数を渡すことにして、マス目がクリックされた時に Square にその関数を呼んでもらう
+    <Square 
+      value={this.state.squares.[i]}
+      onClick={() => this.handleClick(i)}
+    />);
+  }
+}
 
   render() {
     const status = 'Next player: X';
+  }
 
     return (
       <div>
@@ -69,7 +82,7 @@ class Game extends React.Component {
 
 // ========================================
 
-ReactDOM.render(
-  <Game />,
-  document.getElementById('root')
-);
+// ReactDOM.render(
+//   <Game />,
+//   document.getElementById('root')
+// );
